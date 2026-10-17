@@ -42,3 +42,4 @@ Keep the signing key file and its password from the ZIP somewhere safe. You need
 - All data is stored only in your phone's browser or app storage. Nothing is sent to any server.
 - The password is stored as a hash, but the login only locks the app on your device. It does not encrypt your data.
 - If you uninstall the app or clear its storage, your data is deleted. Use **Export CSV** in Settings to keep a backup.
+ 
