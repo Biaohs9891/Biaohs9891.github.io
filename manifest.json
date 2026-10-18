@@ -1,8 +1,10 @@
 {
   "id": "./",
-  "name": "Daily Expenses",
-  "short_name": "Expenses",
-  "description": "Track daily expenses in PKR",
+  "name": "روزانہ اخراجات",
+  "short_name": "اخراجات",
+  "description": "روزانہ اخراجات کا حساب روپوں میں",
+  "lang": "ur",
+  "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
