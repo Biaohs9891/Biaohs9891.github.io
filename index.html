@@ -36,7 +36,8 @@ nav button{flex:1;margin:0;border-radius:0;background:#fff;color:var(--mut);font
 nav button.on{color:var(--g);box-shadow:inset 0 3px 0 var(--g)}
 .login{max-width:340px;margin:12vh auto;padding:20px;text-align:center}
 .login h1{font-size:28px;margin-bottom:18px}
-#u,#p,#nu,#np{direction:ltr}
+#u,#p,#nu,#np,#rc,#rp{direction:ltr}
+textarea{padding:9px;border:1px solid var(--line);border-radius:8px;margin:5px 0}
 </style>
 </head>
 <body>
@@ -47,8 +48,8 @@ const DEF=['Milk','Vegetables','Fruits','Eggs','Flour','Rice','Cooking Oil','Sug
 const UR=['دودھ','سبزی','پھل','انڈے','آٹا','چاول','کوکنگ آئل','چینی اور چائے','گوشت / مرغی','راشن / گروسری','گیس','بجلی کا بل','پانی کا بل','انٹرنیٹ بل','موبائل پیکج','کمیٹی','دوائی','سفر / پیٹرول','اسکول فیس','مکان کا کرایہ','کپڑے','سگریٹ'];
 const LAST='Cigarettes';
 const L={
-en:{title:'Daily Expenses',user:'Username',pass:'Password',login:'Log in',wrong:'Wrong username or password.',tabs:['Dashboard','Expense','Net','Items','Settings'],net:'Net amount',spent:'Spent',rem:'Remaining balance',spp:'Spent',rmp:'Remaining',main:'Main items',none:'No expenses this month. Add one in the Expense tab.',amt:'Amount (PKR)',note:'Note (optional)',addexp:'Add expense',expin:m=>'Expenses in '+m,nothing:'Nothing added yet.',netnote:'Note (e.g. Salary)',savenet:'Save net amount',netin:m=>'Net amounts in '+m,nonet:'No net amount for this month yet.',edit:'Edit',newitem:'New item name',add:'Add',chg:'Change login',nu:'New username',np:'New password',save:'Save login',must:'Choose your own username and password before you continue.',cerr:'Enter a username and a new password (4+ characters, not "admin").',data:'Data',csv:'Export CSV',out:'Log out',need:'Enter an amount and a date.',dexp:'Delete this expense?',dnet:'Delete this net amount?',pnet:'New net amount (PKR):',exists:'Item already exists.',ditem:i=>'Remove "'+i+'" from the list? Old expenses stay.',cols:['Type','Date','Item','Amount (PKR)','Note'],tn:'Net',te:'Expense',cur:n=>'Rs '+n,other:'اردو'},
-ur:{title:'روزانہ اخراجات',user:'صارف نام',pass:'پاس ورڈ',login:'لاگ اِن',wrong:'صارف نام یا پاس ورڈ غلط ہے۔',tabs:['ڈیش بورڈ','خرچہ','نیٹ رقم','اشیاء','ترتیبات'],net:'نیٹ رقم',spent:'کل خرچ',rem:'بقایا رقم',spp:'خرچ',rmp:'بقایا',main:'اہم اشیاء',none:'اس مہینے کوئی خرچہ نہیں۔ "خرچہ" ٹیب میں شامل کریں۔',amt:'رقم (روپے)',note:'نوٹ (اختیاری)',addexp:'خرچہ شامل کریں',expin:m=>m+' کے اخراجات',nothing:'ابھی کچھ شامل نہیں۔',netnote:'نوٹ (مثلاً تنخواہ)',savenet:'نیٹ رقم محفوظ کریں',netin:m=>m+' کی نیٹ رقم',nonet:'اس مہینے کی کوئی نیٹ رقم نہیں۔',edit:'ترمیم',newitem:'نئی چیز کا نام',add:'شامل کریں',chg:'لاگ اِن تبدیل کریں',nu:'نیا صارف نام',np:'نیا پاس ورڈ',save:'محفوظ کریں',must:'جاری رکھنے سے پہلے اپنا صارف نام اور پاس ورڈ منتخب کریں۔',cerr:'نیا صارف نام اور پاس ورڈ درج کریں (کم از کم 4 حروف، "admin" نہیں)۔',data:'ڈیٹا',csv:'CSV ایکسپورٹ',out:'لاگ آؤٹ',need:'رقم اور تاریخ درج کریں۔',dexp:'یہ خرچہ حذف کریں؟',dnet:'یہ نیٹ رقم حذف کریں؟',pnet:'نئی نیٹ رقم (روپے):',exists:'یہ چیز پہلے سے موجود ہے۔',ditem:i=>'فہرست سے "'+i+'" ہٹائیں؟ پرانے خرچے محفوظ رہیں گے۔',cols:['قسم','تاریخ','چیز','رقم (روپے)','نوٹ'],tn:'نیٹ رقم',te:'خرچہ',cur:n=>n+' روپے',other:'English'}
+en:{title:'Daily Expenses',user:'Username',pass:'Password',login:'Log in',wrong:'Wrong username or password.',tabs:['Dashboard','Expense','Net','Items','Settings'],net:'Net amount',spent:'Spent',rem:'Remaining balance',spp:'Spent',rmp:'Remaining',main:'Main items',none:'No expenses this month. Add one in the Expense tab.',amt:'Amount (PKR)',note:'Note (optional)',addexp:'Add expense',expin:m=>'Expenses in '+m,nothing:'Nothing added yet.',netnote:'Note (e.g. Salary)',savenet:'Save net amount',netin:m=>'Net amounts in '+m,nonet:'No net amount for this month yet.',edit:'Edit',newitem:'New item name',add:'Add',chg:'Change login',nu:'New username',np:'New password',save:'Save login',must:'Choose your own username and password before you continue.',cerr:'Enter a username and a new password (4+ characters, not "admin").',data:'Data',csv:'Export CSV',out:'Log out',need:'Enter an amount and a date.',dexp:'Delete this expense?',dnet:'Delete this net amount?',pnet:'New net amount (PKR):',exists:'Item already exists.',ditem:i=>'Remove "'+i+'" from the list? Old expenses stay.',cols:['Type','Date','Item','Amount (PKR)','Note'],tn:'Net',te:'Expense',cur:n=>'Rs '+n,other:'اردو',forgot:'Forgot password?',reset:'Reset app (deletes all data)',recTitle:'Recovery code',recNote:'Write this code down or save it in your notes. It lets you set a new password without losing any data.',recDone:'I saved it',recNew:'Create new recovery code',recEnter:'Recovery code',recBad:'Wrong recovery code.',recNone:'No recovery code was created on this phone. Use Reset app.',recSet:'Set new password',back:'Back',pwerr:'Password must be 4+ characters and not "admin".',bkTitle:'Backup',bkPh:'Tap Copy backup, then paste it in a note or message to yourself. To restore, paste it here.',bkCopy:'Copy backup',bkRestore:'Restore from text',bkCopied:'Backup copied. Paste it in a note or message to yourself.',bkBad:'This is not a valid backup.',bkAsk:'Replace current expenses, net amounts and items with this backup?',bkOk:'Backup restored.',rst:'This deletes ALL data and restores Admin / admin. Continue?'},
+ur:{title:'روزانہ اخراجات',user:'صارف نام',pass:'پاس ورڈ',login:'لاگ اِن',wrong:'صارف نام یا پاس ورڈ غلط ہے۔',tabs:['ڈیش بورڈ','خرچہ','نیٹ رقم','اشیاء','ترتیبات'],net:'نیٹ رقم',spent:'کل خرچ',rem:'بقایا رقم',spp:'خرچ',rmp:'بقایا',main:'اہم اشیاء',none:'اس مہینے کوئی خرچہ نہیں۔ "خرچہ" ٹیب میں شامل کریں۔',amt:'رقم (روپے)',note:'نوٹ (اختیاری)',addexp:'خرچہ شامل کریں',expin:m=>m+' کے اخراجات',nothing:'ابھی کچھ شامل نہیں۔',netnote:'نوٹ (مثلاً تنخواہ)',savenet:'نیٹ رقم محفوظ کریں',netin:m=>m+' کی نیٹ رقم',nonet:'اس مہینے کی کوئی نیٹ رقم نہیں۔',edit:'ترمیم',newitem:'نئی چیز کا نام',add:'شامل کریں',chg:'لاگ اِن تبدیل کریں',nu:'نیا صارف نام',np:'نیا پاس ورڈ',save:'محفوظ کریں',must:'جاری رکھنے سے پہلے اپنا صارف نام اور پاس ورڈ منتخب کریں۔',cerr:'نیا صارف نام اور پاس ورڈ درج کریں (کم از کم 4 حروف، "admin" نہیں)۔',data:'ڈیٹا',csv:'CSV ایکسپورٹ',out:'لاگ آؤٹ',need:'رقم اور تاریخ درج کریں۔',dexp:'یہ خرچہ حذف کریں؟',dnet:'یہ نیٹ رقم حذف کریں؟',pnet:'نئی نیٹ رقم (روپے):',exists:'یہ چیز پہلے سے موجود ہے۔',ditem:i=>'فہرست سے "'+i+'" ہٹائیں؟ پرانے خرچے محفوظ رہیں گے۔',cols:['قسم','تاریخ','چیز','رقم (روپے)','نوٹ'],tn:'نیٹ رقم',te:'خرچہ',cur:n=>n+' روپے',other:'English',forgot:'پاس ورڈ بھول گئے؟',reset:'ایپ ری سیٹ کریں (سارا ڈیٹا حذف)',recTitle:'ریکوری کوڈ',recNote:'اس کوڈ کو لکھ لیں یا نوٹس میں محفوظ کر لیں۔ اس سے ڈیٹا کھوئے بغیر نیا پاس ورڈ بنایا جا سکتا ہے۔',recDone:'میں نے محفوظ کر لیا',recNew:'نیا ریکوری کوڈ بنائیں',recEnter:'ریکوری کوڈ',recBad:'ریکوری کوڈ غلط ہے۔',recNone:'اس فون پر ریکوری کوڈ نہیں بنا۔ ایپ ری سیٹ استعمال کریں۔',recSet:'نیا پاس ورڈ سیٹ کریں',back:'واپس',pwerr:'پاس ورڈ کم از کم 4 حروف کا ہو اور "admin" نہ ہو۔',bkTitle:'بیک اپ',bkPh:'"بیک اپ کاپی کریں" دبائیں، پھر اسے اپنے نوٹس یا میسج میں پیسٹ کر لیں۔ بحال کرنے کے لیے یہاں پیسٹ کریں۔',bkCopy:'بیک اپ کاپی کریں',bkRestore:'ٹیکسٹ سے بحال کریں',bkCopied:'بیک اپ کاپی ہو گیا۔ اسے اپنے نوٹس یا میسج میں پیسٹ کر لیں۔',bkBad:'یہ درست بیک اپ نہیں ہے۔',bkAsk:'موجودہ خرچے، نیٹ رقم اور اشیاء کو اس بیک اپ سے بدل دیں؟',bkOk:'بیک اپ بحال ہو گیا۔',rst:'یہ تمام ڈیٹا حذف کر دے گا اور Admin / admin بحال کر دے گا۔ جاری رکھیں؟'}
 };
 let S,lang=localStorage.getItem(LK)||'en',view='dash',authed=false,month=new Date().toISOString().slice(0,7);
 const t=k=>L[lang][k];
@@ -60,6 +61,8 @@ const today=()=>new Date().toISOString().slice(0,10);
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
 const inM=d=>d.date.slice(0,7)===month;
 const sorted=()=>[...S.items].sort((a,b)=>(a===LAST)-(b===LAST));
+let mode='login',shown='';
+function resetApp(){if(confirm(t('rst'))){try{localStorage.removeItem(K)}catch(e){}location.reload()}}
 function setLang(){lang=lang==='ur'?'en':'ur';try{localStorage.setItem(LK,lang)}catch(e){}render()}
 async function hash(p){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('exp|'+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 async function init(){
@@ -68,14 +71,38 @@ async function init(){
   render();
 }
 async function login(){
-  const u=$('u').value.trim(),p=$('p').value;
+  const u=$('u').value.trim(),p=$('p').value.trim();
   if(u.toLowerCase()===S.user.toLowerCase()&&await hash(p)===S.pass){authed=true;view=S.must?'settings':'dash';render()}
   else $('err').textContent=t('wrong');
 }
 async function chg(){
-  const u=$('nu').value.trim(),p=$('np').value;
+  const u=$('nu').value.trim(),p=$('np').value.trim();
   if(!u||p.length<4||p==='admin'){$('cerr').textContent=t('cerr');return}
-  S.user=u;S.pass=await hash(p);S.must=false;save();view='dash';render();
+  const first=S.must||!S.rec;
+  S.user=u;S.pass=await hash(p);S.must=false;
+  if(first)await newCode();
+  save();view=first?'settings':'dash';render();
+}
+async function newCode(){
+  const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',r=crypto.getRandomValues(new Uint8Array(8));let c='';
+  r.forEach(x=>c+=a[x%a.length]);
+  shown=c.slice(0,4)+'-'+c.slice(4);S.rec=await hash('rec|'+c);save();
+}
+async function recover(){
+  const c=$('rc').value.toUpperCase().replace(/[^A-Z0-9]/g,''),p=$('rp').value.trim();
+  if(!S.rec||await hash('rec|'+c)!==S.rec){$('rerr').textContent=t(S.rec?'recBad':'recNone');return}
+  if(p.length<4||p==='admin'){$('rerr').textContent=t('pwerr');return}
+  S.pass=await hash(p);S.must=false;await newCode();save();authed=true;mode='login';view='settings';render();
+}
+function bkMake(){
+  const s=JSON.stringify({v:1,items:S.items,net:S.net,exp:S.exp});$('bk').value=s;
+  try{navigator.clipboard.writeText(s).then(()=>alert(t('bkCopied')),()=>$('bk').select())}catch(e){$('bk').select()}
+}
+function bkLoad(){
+  let d;try{d=JSON.parse($('bk').value)}catch(e){}
+  const ok=d&&Array.isArray(d.items)&&d.items.every(i=>typeof i==='string')&&[d.net,d.exp].every(l=>Array.isArray(l)&&l.every(x=>x&&typeof x.amt==='number'&&typeof x.date==='string'));
+  if(!ok){alert(t('bkBad'));return}
+  if(confirm(t('bkAsk'))){S.items=d.items;S.net=d.net;S.exp=d.exp;save();alert(t('bkOk'));view='dash';render()}
 }
 function totals(){
   const net=S.net.filter(inM).reduce((a,x)=>a+x.amt,0);
@@ -140,9 +167,10 @@ const views={
     sorted().map(i=>`<div class="box row"><span>${esc(nm(i))}</span><a onclick="delItem(decodeURIComponent('${encodeURIComponent(i)}'))">✕</a></div>`).join('');
   },
   settings(){
-    return (S.must?`<p class="box" style="background:var(--rl)">${t('must')}</p>`:'')+
-    `<h3>${t('chg')}</h3><div class="box"><input id="nu" value="${esc(S.user)}" placeholder="${t('nu')}" autocapitalize="off"><input id="np" type="password" placeholder="${t('np')}"><button onclick="chg()">${t('save')}</button><p id="cerr" class="err"></p></div>`+
-    (S.must?'':`<h3>${t('data')}</h3><button class="alt" onclick="csv()">${t('csv')}</button><button class="alt" onclick="authed=false;render()">${t('out')}</button>`);
+    return (shown?`<div class="box" style="background:var(--gl)"><h3 style="margin:0">${t('recTitle')}</h3><p style="font-size:26px;letter-spacing:3px;direction:ltr;text-align:center;font-weight:bold;margin:8px 0">${shown}</p><p class="hint">${t('recNote')}</p><button onclick="shown='';render()">${t('recDone')}</button></div>`:'')+
+    (S.must?`<p class="box" style="background:var(--rl)">${t('must')}</p>`:'')+
+    `<h3>${t('chg')}</h3><div class="box"><input id="nu" value="${esc(S.user)}" placeholder="${t('nu')}" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off"><input id="np" type="password" placeholder="${t('np')}" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off"><button onclick="chg()">${t('save')}</button><p id="cerr" class="err"></p></div>`+
+    (S.must?'':`<h3>${t('recTitle')}</h3><div class="box"><button class="alt" onclick="newCode().then(()=>render())">${t('recNew')}</button></div><h3>${t('bkTitle')}</h3><div class="box"><textarea id="bk" rows="4" placeholder="${t('bkPh')}" style="width:100%;font:13px monospace;direction:ltr"></textarea><button onclick="bkMake()">${t('bkCopy')}</button><button class="alt" onclick="bkLoad()">${t('bkRestore')}</button></div><h3>${t('data')}</h3><button class="alt" onclick="csv()">${t('csv')}</button><button class="alt" onclick="authed=false;render()">${t('out')}</button>`);
   }
 };
 function render(){
@@ -150,8 +178,12 @@ function render(){
   h.lang=lang;h.dir=lang==='ur'?'rtl':'ltr';document.title=t('title');
   const lb=`<button class="alt" onclick="setLang()">${t('other')}</button>`;
   if(!authed){
-    a.innerHTML=`<div class="login"><h1>${t('title')}</h1><input id="u" placeholder="${t('user')}" autocapitalize="off"><input id="p" type="password" placeholder="${t('pass')}"><button onclick="login()">${t('login')}</button><p id="err" class="err"></p>${lb}</div>`;
-    $('p').onkeydown=e=>{if(e.key==='Enter')login()};return;
+    const na='autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off"';
+    a.innerHTML=mode==='rec'
+      ?`<div class="login"><h1>${t('forgot')}</h1><input id="rc" placeholder="${t('recEnter')}" ${na}><input id="rp" type="password" placeholder="${t('np')}" ${na}><button onclick="recover()">${t('recSet')}</button><p id="rerr" class="err"></p><p><a onclick="mode='login';render()">${t('back')}</a></p><p><a onclick="resetApp()">${t('reset')}</a></p>${lb}</div>`
+      :`<div class="login"><h1>${t('title')}</h1><input id="u" placeholder="${t('user')}" ${na}><input id="p" type="password" placeholder="${t('pass')}" ${na}><button onclick="login()">${t('login')}</button><p id="err" class="err"></p><p><a onclick="mode='rec';render()">${t('forgot')}</a></p>${lb}</div>`;
+    if(mode!=='rec')$('p').onkeydown=e=>{if(e.key==='Enter')login()};
+    return;
   }
   if(S.must)view='settings';
   const ids=['dash','add','net','items','settings'];
